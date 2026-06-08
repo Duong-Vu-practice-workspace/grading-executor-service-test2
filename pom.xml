@@ -44,6 +44,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>com.github.Duong-Vu-practice-workspace</groupId>
             <artifactId>grading-common-lib-test2</artifactId>
             <version>main-SNAPSHOT</version>
