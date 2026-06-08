@@ -81,8 +81,7 @@ jobs:
       - name: Replace IMAGE_TAG in deployment
         run: |
           cd config-repo
-          sed -i "s/DOCKERHUB_USERNAME/${{ secrets.DOCKERHUB_USERNAME }}/g" deployment.yaml
-          sed -i "s/IMAGE_TAG_REPLACEMENT/${{ steps.version.outputs.VERSION }}/g" deployment.yaml
+          sed -i "s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/grading-executor:${{ steps.version.outputs.VERSION }}|g" deployment.yaml
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add .
