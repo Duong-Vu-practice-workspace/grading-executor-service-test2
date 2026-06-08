@@ -6,7 +6,7 @@ on:
 
 env:
   IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/grading-executor
-  CONFIG_REPO: Duong-Vu-practice-workspace/grading-executor-service-config-test2
+  CONFIG_REPO: Duong-Vu-practice-workspace/grading-config-test2
   SERVICE_NAME: executor-service
 
 jobs:
@@ -71,19 +71,15 @@ jobs:
             ${{ env.IMAGE_NAME }}:latest
             ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.VERSION }}
 
-      - name: Update config repo
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.CONFIG_REPO }}
-          token: ${{ secrets.CONFIG_REPO_TOKEN }}
-          path: config-repo
-
-      - name: Replace IMAGE_TAG in deployment
+      - name: Update config repo (ArgoCD)
+        env:
+          GH_TOKEN: ${{ secrets.CONFIG_REPO_TOKEN }}
         run: |
+          git clone https://x-access-token:${{ env.GH_TOKEN }}@github.com/Duong-Vu-practice-workspace/grading-config-test2.git config-repo
           cd config-repo
-          sed -i "s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/grading-executor:${{ steps.version.outputs.VERSION }}|g" deployment.yaml
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
+          sed -i 's|tag: .*|tag: "${{ steps.version.outputs.VERSION }}"|' values-stg.yaml
+          git config user.email "ci@grading-platform.com"
+          git config user.name "GitHub CI"
           git add .
           git diff --staged --quiet || git commit -m "Update ${{ env.SERVICE_NAME }} to ${{ steps.version.outputs.VERSION }}"
           git push
