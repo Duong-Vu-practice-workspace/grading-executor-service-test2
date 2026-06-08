@@ -56,6 +56,11 @@ jobs:
           prerelease: true
           files: target/*.jar
 
+      - name: Update latest tag
+        run: |
+          git tag -f latest
+          git push -f origin latest
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -75,7 +80,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CONFIG_REPO_TOKEN }}
         run: |
-          git clone https://x-access-token:${{ env.GH_TOKEN }}@github.com/Duong-Vu-practice-workspace/grading-config-test2.git config-repo
+          git clone https://x-access-token:${ env.GH_TOKEN }@github.com/Duong-Vu-practice-workspace/grading-config-test2.git config-repo
           cd config-repo
           sed -i 's|tag: .*|tag: "${{ steps.version.outputs.VERSION }}"|' values-stg.yaml
           git config user.email "ci@grading-platform.com"
