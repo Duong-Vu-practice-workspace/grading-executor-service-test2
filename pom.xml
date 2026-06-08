@@ -23,12 +23,6 @@
         <testcontainers.version>1.21.0</testcontainers.version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/Duong-Vu-practice-workspace/grading-common-lib-test2</url>
-        </repository>
-    </repositories>
 
     <dependencyManagement>
         <dependencies>
