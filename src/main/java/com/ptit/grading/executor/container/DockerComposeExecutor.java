@@ -11,6 +11,7 @@ import org.testcontainers.images.builder.ImageFromDockerfile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -95,15 +96,4 @@ public class DockerComposeExecutor {
         return appContainer != null ? appContainer.getContainerId() : null;
     }
 
-    private static class Duration {
-        private final long seconds;
-
-        private Duration(long seconds) {
-            this.seconds = seconds;
-        }
-
-        public static Duration ofSeconds(long seconds) {
-            return new Duration(seconds);
-        }
-    }
 }
