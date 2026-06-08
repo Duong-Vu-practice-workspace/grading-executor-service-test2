@@ -98,7 +98,7 @@ public class TestExecutor {
 
         // Parse pathVariables from JSON to list
         if (pathVariables instanceof String pvJson && !pvJson.isBlank()) {
-            var pvList = gson.fromJson(pvJson,
+            var pvList = gson.<Map<String, String>[]>fromJson(pvJson,
                 new TypeToken<Map<String, String>[]>(){}.getType());
             for (Map<String, String> pv : pvList) {
                 String name = pv.get("name");
