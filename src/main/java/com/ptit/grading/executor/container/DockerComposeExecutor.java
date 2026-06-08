@@ -61,7 +61,7 @@ public class DockerComposeExecutor {
         )
             .withExposedPorts(exposedPort)
             .withLogConsumer(new Slf4jLogConsumer(log))
-            .waitingFor(org.testcontainers.containers.wait.Wait.forHttp("/actuator/health")
+            .waitingFor(Wait.forHttp("/actuator/health")
                 .forPort(exposedPort)
                 .withStartupTimeout(Duration.ofSeconds(30)));
 
