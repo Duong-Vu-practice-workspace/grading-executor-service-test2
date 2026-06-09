@@ -56,10 +56,13 @@ jobs:
           prerelease: true
           files: target/*.jar
 
-      - name: Update latest tag
-        run: |
-          git tag -f latest
-          git push -f origin latest
+      - name: Create/Update latest release with JAR
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: ${{ env.SERVICE_NAME }} latest
+          prerelease: true
+          files: target/*.jar
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
