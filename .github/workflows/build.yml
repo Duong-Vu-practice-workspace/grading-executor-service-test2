@@ -5,9 +5,9 @@ on:
     branches: [main]
 
 env:
-  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/grading-executor
-  CONFIG_REPO: Duong-Vu-practice-workspace/grading-config-test2
-  SERVICE_NAME: executor-service
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/grading-grading-service
+  CONFIG_REPO: Duong-Vu-practice-workspace/grading-executor-service-config-test2
+  SERVICE_NAME: grading-service
 
 jobs:
   build:
@@ -82,7 +82,7 @@ jobs:
         run: |
           git clone https://x-access-token:${{ env.GH_TOKEN }}@github.com/${{ env.CONFIG_REPO }}.git config-repo
           cd config-repo
-          sed -i 's|tag: .*|tag: "${{ steps.version.outputs.VERSION }}"|' values-stg.yaml
+          sed -i "s/IMAGE_TAG_REPLACEMENT/${{ steps.version.outputs.VERSION }}/g" deployment.yaml
           git config user.email "ci@grading-platform.com"
           git config user.name "GitHub CI"
           git add .
